@@ -3,6 +3,7 @@ import { ListboxOptions,ListboxOption,ListboxButton, Listbox, Transition } from 
 import { Check, ChevronDown, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import client from '../api/axiosClient';
 
 function AppForm() {
   const transactionTypes = [
@@ -34,11 +35,7 @@ function AppForm() {
     };
 
     const token = localStorage.getItem("token");
-    await axios.post("http://localhost:8080/transaction",formData,{
-      headers:{
-            Authorization: `Bearer ${token}`
-          }
-    })
+    await client.post("/transaction",formData)
     console.log('Form Submitted:', formData);
 
     //Pop-up Alert

@@ -10,6 +10,7 @@ import {
   X,
 } from "lucide-react";
 import axios from "axios";
+import client from "../api/axiosClient";
 
 export default function Transaction() {
   const { id } = useParams();
@@ -29,7 +30,7 @@ export default function Transaction() {
     async function fetchData() {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`http://localhost:8080/transaction/${id}`,{
+        const res = await client.get(`/transaction/${id}`,{
           headers:{
             Authorization: `Bearer ${token}`
           }
@@ -56,11 +57,7 @@ export default function Transaction() {
   const handleSave = async () => {
     try {
        const token = localStorage.getItem("token");
-      const res = await axios.put(`http://localhost:8080/transaction`,form,{
-        headers:{
-            Authorization: `Bearer ${token}`
-          }
-      });
+      const res = await client.put(`/transaction`,form);
       setTransaction(res.data);
       setEditMode(false);
     } catch (err) {
@@ -83,12 +80,8 @@ export default function Transaction() {
 
     try {
       setDeleting(true);
-      const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:8080/transaction/${id}`,{
-        headers:{
-            Authorization: `Bearer ${token}`
-          }
-      });
+      
+      await client.delete(`/transaction/${id}`);
       navigate("/home"); // ✅ Redirect after delete
     } catch (err) {
       alert(err.response?.data?.message || "Failed to delete transaction");
