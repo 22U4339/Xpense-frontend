@@ -2,7 +2,7 @@ import axios from "axios";
 
 // https://xpense-latest.onrender.com
 const client = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://xpense-latest.onrender.com",
   headers: { "Content-Type": "application/json" },
 });
 
